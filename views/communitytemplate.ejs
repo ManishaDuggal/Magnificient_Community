@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <title>Node File Uploads</title>
+  <style>
+    body{
+      background-color: rgb(255, 251, 251);
+    }
+  .myform{
+    background-color: rgb(255, 255, 255);
+    margin:2cm 5cm 0cm 5cm;
+    border-radius: 25px;
+  border: 2px solid rgb(84, 159, 245); 
+  }
+  #myimage{
+      padding:1cm 1cm 1cm 1cm;
+  }
+  
+  #mysidenav{ 
+    position:absolute;
+    left:0;
+    text-decoration: none;
+    background-color: blue;
+  }
+  #hnav{
+    background-color:blue;
+    color:white;
+  }
+  #hnav:hover{
+    background-color:black;
+    color:white;
+  }
+  </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper blue">
+          <a href="#" class="brand-logo">Magnificent Community</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><i class="fa fa-cloud"></i></li>
+            <li><a href="/adminhome">Home</a></li>
+            <li><a href="/adduser">Add User</a></li>
+            <li><a href="/userslist">Users List</a></li>
+            <li><a href="/createcommunity">Create Community</a></li>
+            <li><a href="/communitieslist">Community List</a></li>
+            <li><a href="/password">Change Password</a></li>
+          </ul>
+        </div>
+      </nav>
+  <!--community details-->
+  <div class="card" style="width: 18rem;">
+    <img src="uploads/'<%=obj.path%>'" class="card-img-top" alt="Icon" style="height:200px;width:250px">
+    <div class="card-body">
+      <h5 class="card-title"><%=obj.name%></h5>
+      <p class="card-text"><%=obj.description%></p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">No of members <%=obj.noofusers%></li>
+      <li class="list-group-item">Owner <%=obj.owner%></li>
+      <li class="list-group-item">Manager of this community <%=obj.community_manager%></li>
+    </ul>
+    <div class="card-body">
+      <a href="/communityusers/<%=obj.name%>" class="card-link">View Members</a>
+    </div>
+  </div>
+  
+  <script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>  
+</body>
+</html>

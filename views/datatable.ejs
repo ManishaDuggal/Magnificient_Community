@@ -1,0 +1,112 @@
+<html>
+<head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        
+  <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+  <link href="css/usertablestyle.css" rel="stylesheet">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+</head>
+<body>
+        <nav class="navbar navbar-light bg-light">
+                <a style="color:rgb(59, 81, 182)" class="navbar-brand">Community Builder</a>
+                <form class="form-inline">
+                        <button type="button" class="btn btn-primary">
+                                Notifications <span class="badge badge-light">4</span>
+                          </button>
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+                  <a href="/logout">Logout</a>
+                </form>
+     </nav>
+     <nav class="navbar navbar-light nav-bg">
+        <span class="navbar-text" id="demo">
+        <%=str%>
+        </span>
+     </nav>
+     <div class="left">
+        </br>
+        <div class="item"> 
+          <i onclick="goHome()" class="fa fa-home" style="font-size:27px"></i> &nbsp &nbsp Home
+      </div>
+      
+            <div class="item active">
+                <i style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-user-plus fa-map-marked-alt" onclick="goUser()"></i>   &nbsp &nbsp  Add User
+            </div>
+            <div class="item">
+                <i onclick="goUserList()" style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-users fa-columns"></i>  &nbsp &nbsp  Users List
+            </div>
+            <div class="item">
+              <i onclick="goCreateCommunity()" class="fa fa-object-group" style="font-size:27px"></i> &nbsp &nbsp &nbsp Create Community
+          </div>
+          <div class="item">
+            <i onclick="goCommunitiesList()" class="fa fa-list" style="font-size:27px"></i> &nbsp &nbsp &nbsp Communities List
+        </div>
+            <div class="item">
+                <i onclick="goPassword()" class="fa fa-lock" style="font-size:27px"></i> &nbsp &nbsp &nbsp Change Password
+            </div>
+        </div>
+        <table class="table" id="example">
+          <thead style="background-color: #367ab7">
+            <tr >
+              <th scope="col">User</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Status</th>
+              <th scope="col">Role</th>
+              <th scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+              <% var i=0; %>
+               <% arr.forEach(function(obj){ %>
+                <tr>
+                  <th scope="row"><%= ++i%></th>
+                  <td><%= obj.email%></td>
+                  <td><%= obj.phone%></td>
+                  <td><%= obj.status%></td>
+                  <td><%= obj.role%></td>
+                  <td><a class="btn btn-danger" href="/deleteuser/'<%= obj.email%>'"  role="button">Delete</a></td>
+                </tr>
+                <% }) %>
+      
+              </tbody>
+        </table>
+            
+        
+  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+  <script>
+    function goUser(){
+    window.location.href = '/adduser';
+  }
+  function goHome(){
+    window.location.href = '/adminhome';
+  }
+  function goUserList(){
+    window.location.href = '/userslist';
+  }
+  function goPassword(){
+    window.location.href = '/password';
+  }
+  function goCreateCommunity(){
+    window.location.href = '/createcommunity';
+  }
+  function goCommunitiesList(){
+    window.location.href = '/communitieslist';
+  }
+  $(function(){
+    $("#example").dataTable();
+  })
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+  
+</body>
+</html>

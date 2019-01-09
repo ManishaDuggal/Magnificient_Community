@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <link href="css/usertablestyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+    <title>Add User</title>
+  </head>
+  <body>
+     <nav class="navbar navbar-light bg-light">
+                <a style="color:rgb(59, 81, 182)" class="navbar-brand">Community Builder</a>
+                <form class="form-inline">
+                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+                </form>
+     </nav>
+     <nav class="navbar navbar-light nav-bg">
+            <span class="navbar-text" id="demo">
+              Welcome
+            </span>
+     </nav>
+    <div class="left">
+    </br>
+    <div class="item"> 
+      <i onclick="goHome()" class="fa fa-home" style="font-size:27px"></i> &nbsp &nbsp Home
+  </div>
+        <div class="item active">
+            <i style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-user-plus fa-map-marked-alt" onclick="goUser()"></i>   &nbsp &nbsp  Add User
+        </div>
+        <div class="item">
+            <i onclick="goUserList()" style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-users fa-columns"></i>  &nbsp &nbsp  Users List
+        </div>
+        <div class="item">
+            <i class="fa fa-lock" style="font-size:27px"></i> &nbsp &nbsp &nbsp Change Password
+        </div>
+    </div>
+    <div class="mytable">
+            <table id="example" class="mytable">
+                    <thead>
+                      <tr><th>Sites</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>SitePoint</td></tr>
+                      <tr><td>Learnable</td></tr>
+                      <tr><td>Flippa</td></tr>
+                    </tbody>
+                  </table>
+        </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script>
+  function goUser(){
+    window.location.href = '/adduser';
+  }
+  function goHome(){
+    window.location.href = '/adminhome';
+  }
+  function goUserList(){
+    window.location.href = '/userslist';
+  }
+  $(function(){
+    $("#example").dataTable();
+  })
+</script>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+
+<script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+  </body>
+</html>
