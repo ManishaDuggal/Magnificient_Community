@@ -41,11 +41,9 @@
             <i onclick="goUserList()" style="font-size:27px;color:rgb(255, 255, 255)" class="fa fa-users fa-columns"></i> &nbsp &nbsp Users List
         </div>
         <%}%>
-        <%if(role=="admin"||role=="community builder"){%>
         <div class="item">
           <i onclick="goCreateCommunity()" class="fa fa-object-group" style="font-size:27px"></i> &nbsp &nbsp &nbsp Create Community
       </div>
-      <%}%>
       <div class="item">
         <i onclick="goCommunitiesList()" class="fa fa-list" style="font-size:27px"></i> &nbsp &nbsp &nbsp Communities List
     </div>
@@ -53,21 +51,75 @@
             <i onclick="goPassword()" class="fa fa-lock" style="font-size:27px"></i> &nbsp &nbsp &nbsp Change Password
         </div>
     </div>
-    <div style="margin-left: 2cm">
-        <% arr.forEach(function(x){ %>
-          <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"><%=x%></h5>
-                <%i="/communitypage/"+x%>
-                <a href=<%=i%> class="btn btn-primary">Go Here</a>
-              </div>
+    <div class="card border-primary mb-3" style="margin-left:2cm;max-width:63rem;">
+        <div class="card-header">Add Discussion</div>
+        <form id="idForm"  method="POST">
+            <div class="form-group">
+              <input id="title" name="title" type="text" class="form-control" id="formGroupExampleInput" placeholder="Title">
             </div>
-            <%})%>
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1">Message</label>
+                <textarea id="message" name="message" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" onclick="goDiscussion('<%=community_id%>')">Submit</button>
+          </form>
+      </div>
+
+
+      <div id="parent">
+        <%arr.reverse()%>
+          <% arr.forEach(function(obj){ %>
+      <div class="card text-white bg-primary mb-3" style="margin-left:2cm;max-width: 63rem;">
+        <div class="card-header"><%=obj.username%></div>
+        <div class="card-body">
+          <h5 class="card-title"><%=obj.title%></h5>
+          <p class="card-text"><%=obj.message%></p>
+        </div>
+      </div>
+      <% }) %>
     </div>
-   
     <!-- Optional JavaScript -->
     <!-- my script -->
 <script>
+    function goDiscussion(id){
+    var title=$("#title").val();
+    var message=$("#message").val();
+      //html
+      var container = $("<div>");
+   container.addClass("card text-white bg-primary mb-3");
+   container.css({"margin-left":"2cm", "max-width":"63rem"});
+   container.append(' <div class="card-header">'+'<%=username%>'+'</div>');
+   var container2=$("<div>");
+    container2.addClass("card-body");
+   container2.append(' <h5 class="card-title">'+title+'</h5>');
+   container2.append('<p class="card-text">'+message+'</p>');
+   container.append(container2);
+      $('#parent').prepend(container);    
+      //ajax request
+      const contactForm = document.getElementById("idForm");
+
+contactForm.addEventListener("submit", function(event) {
+
+  event.preventDefault();
+
+    var request = new XMLHttpRequest();
+    var url = "/add_discussion";
+    request.open("POST", url, true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.onreadystatechange = function () {
+        if (request.readyState === 4 && request.status === 200) {
+            var jsonData = JSON.parse(request.response);
+            //alert(jsonData.good);
+        }
+    };
+
+    var data = JSON.stringify({"community_id":id,"title":title,"message":message,});
+    request.send(data);
+
+});  
+
+}
+    
   function goUser(){
     window.location.href = '/adduser';
   }
@@ -80,7 +132,9 @@
   function goPassword(){
     window.location.href = '/password';
   }
-  
+  function goPassword(){
+    window.location.href = '/password';
+  }
   function goCreateCommunity(){
     window.location.href = '/createcommunity';
   }
@@ -92,6 +146,5 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
-
   </body>
 </html>

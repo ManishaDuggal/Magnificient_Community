@@ -43,18 +43,22 @@
           <a href="#" class="brand-logo">Magnificent Community</a>
           <ul id="nav-mobile" class="right hide-on-med-and-down">
             <li><i class="fa fa-cloud"></i></li>
+            <li><a href="/discussion/<%=obj._id%>">Discussion</a></li>
             <li><a href="/adminhome">Home</a></li>
             <li><a href="/adduser">Add User</a></li>
             <li><a href="/userslist">Users List</a></li>
             <li><a href="/createcommunity">Create Community</a></li>
             <li><a href="/communitieslist">Community List</a></li>
             <li><a href="/password">Change Password</a></li>
+            <li><a href="/requests">Requests</a></li>
+            <li><a href="/logout">Logout</a></li>
           </ul>
         </div>
       </nav>
   <!--community details-->
   <div class="card" style="width: 18rem;">
-    <img src="uploads/'<%=obj.path%>'" class="card-img-top" alt="Icon" style="height:200px;width:250px">
+    <%obj.path="uploads/"+obj.path%>
+    <img src=<%=obj.path%> class="card-img-top" alt="Icon" style="height:200px;width:250px">
     <div class="card-body">
       <h5 class="card-title"><%=obj.name%></h5>
       <p class="card-text"><%=obj.description%></p>

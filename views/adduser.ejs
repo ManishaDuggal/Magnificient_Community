@@ -17,9 +17,10 @@
      <nav class="navbar navbar-light bg-light">
                 <a style="color:rgb(59, 81, 182)" class="navbar-brand">Community Builder</a>
                 <form class="form-inline">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
-                  <a href="/logout">Logout</a>
+                    <a class="btn btn-danger" href="/requests" role="button">
+                      Requests
+                    </a>
+                    <a class="btn btn-primary" href="/logout" role="button">Logout</a>
                 </form>
      </nav>
      <nav class="navbar navbar-light nav-bg">
@@ -66,7 +67,6 @@
                 <select  required data-style="btn-info" name="role" class="form-control">
                      <optgroup  label="Select User Role">
                       <option value="user">User</option>
-                      <option value="commuity manager">Commuity Manager</option>
                       <option value="community builder">Community Builder</option>
                       <option value="admin">Admin</option>
                     </optgroup>

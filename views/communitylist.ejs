@@ -55,8 +55,8 @@
                 <i onclick="goPassword()" class="fa fa-lock" style="font-size:27px"></i> &nbsp &nbsp &nbsp Change Password
             </div>
         </div>
-        
-        <table class="table table-hover" id="example">
+
+        <table class=table id="example" >
             <thead>
               <tr>
                 <th scope="col">Name</th>
@@ -76,7 +76,17 @@
                 <td><%= obj.status%></td>
                 <%obj.path="uploads/"+obj.path%>
                 <td><img src=<%=obj.path%> alt="Community Icon" height="63" width="63"></td>
+                <% var flag=0;
+                if(obj.active_users){
+                obj.active_users.forEach(function(x){
+                  if(x==curr_user)flag=1;
+                })
+              }%>
+                <%if(flag==0){%>
                 <td style="font-size: 36px color;color:black" ><i onclick="addMe('<%=obj.name%>')" class="fa fa-plus-square"></i>Join</td>
+                <%}else{%>
+                     <td>Already a member</td>
+                <%}%>
               </tr>
               <% })%>
     

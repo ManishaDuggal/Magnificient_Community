@@ -16,12 +16,11 @@
   <body>
      <nav class="navbar navbar-light bg-light">
                 <a style="color:rgb(59, 81, 182)" class="navbar-brand">Community Builder</a>
-                <a class="btn btn-primary" href="/requests" role="button">
-                  Requests <span class="badge badge-light"><%=arr.length%></span>
-                </a>
                 <form class="form-inline">
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+                    <a class="btn btn-danger" href="/requests" role="button">
+                      Requests
+                    </a>
+                  </br>
                   <a class="btn btn-primary" href="/logout" role="button">Logout</a>
                 </form>
      </nav>
@@ -59,7 +58,8 @@
         <div class="card-body">
           <h5 class="card-title"><%=obj.community%></h5>
           <p class="card-text"><%=obj.user%></p>
-          <a  href="/handlerequest/'<%=obj.user%>'/'<%=obj.community%>'/accept" onclick="$(this).parent().remove()" class="btn btn-primary">Go somewhere</a>
+          <a  href="/handlerequest/<%=obj.user%>/<%=obj.community%>/accept" onclick="$(this).parent().remove()" class="btn btn-primary">Accept</a>
+          <a  href="/handlerequest/<%=obj.user%>/<%=obj.community%>/reject" onclick="$(this).parent().remove()" class="btn btn-primary">Reject</a>
         </div>
       </div>
       <% }) %>

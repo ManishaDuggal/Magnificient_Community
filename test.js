@@ -49,9 +49,7 @@ validation.emailValidation(req.body.email,function(result){
 const db=require('./communities-database');
 //test1
 app.get('/',function(req,res){
-    db.getCommunities(function(result){
-        res.render('test',{arr:result});
+   res.render('discussion',{role:"admin"})
 });
-  
-});
+
 app.listen(3002);

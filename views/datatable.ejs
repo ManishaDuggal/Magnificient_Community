@@ -15,19 +15,17 @@
 </head>
 <body>
         <nav class="navbar navbar-light bg-light">
-                <a style="color:rgb(59, 81, 182)" class="navbar-brand">Community Builder</a>
+                <a style="color:rgb(59, 81, 182)" class="navbar-brand">Magnificent Community</a>
                 <form class="form-inline">
-                        <button type="button" class="btn btn-primary">
-                                Notifications <span class="badge badge-light">4</span>
-                          </button>
-                  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
-                  <a href="/logout">Logout</a>
+                    <a class="btn btn-danger" href="/requests" role="button">
+                      Requests
+                    </a>
+                    <a class="btn btn-primary" href="/logout" role="button">Logout</a>
                 </form>
      </nav>
      <nav class="navbar navbar-light nav-bg">
         <span class="navbar-text" id="demo">
-        <%=str%>
+        </br>
         </span>
      </nav>
      <div class="left">
@@ -72,7 +70,7 @@
                   <td><%= obj.phone%></td>
                   <td><%= obj.status%></td>
                   <td><%= obj.role%></td>
-                  <td><a class="btn btn-danger" href="/deleteuser/'<%= obj.email%>'"  role="button">Delete</a></td>
+                  <td><a class="btn btn-danger" href="/deleteuser/<%= obj.email%>"  role="button">Delete</a></td>
                 </tr>
                 <% }) %>
       

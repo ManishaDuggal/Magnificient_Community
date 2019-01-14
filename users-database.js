@@ -53,6 +53,7 @@ updateUser:function(email,newvalue,callback){
     });
   });
 },
+
 updateUserArray:function(useremail,newvalues,callback){
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -61,20 +62,25 @@ updateUserArray:function(useremail,newvalues,callback){
     //add to array if it doesnot exist
     dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
       if (err) throw err;
-      console.log("Community added");
       db.close();
     });
   });
   callback();
 },
+
 deleteUser:function(email,callback){
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("communityproject");
     var myquery = { email: email };
-    dbo.collection("users").deleteOne(myquery);
+    dbo.collection("users").deleteOne(myquery,function(error)
+    {
+      // error handling here
+     // console.log(error)
+      callback();
+      
+    });
   });
-  callback();
 },
 
 addCommunity:function(useremail,comname,callback){
@@ -93,6 +99,19 @@ addCommunity:function(useremail,comname,callback){
   callback();
 },
 
+deleteRequest:function(email,community,callback){
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("communityproject");
+    var myquery = {email:email};
+   newvalues={ "$pull" : { "requests" : { "community" : community } }  }
+    dbo.collection("users").updateOne(myquery, newvalues, function(err, res) {
+      if (err) throw err;
+      db.close();
+    });
+  });
+  callback();
+},
 
 }
 

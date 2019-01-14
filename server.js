@@ -8,10 +8,12 @@ app.use(session({secret: "Shh, its a secret!",resave:false,saveUninitialized:fal
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(express.static('public'));
 var db=require('./users-database.js');
 const cdb=require('./communities-database');
+var ddb=require('./discussion_database.js');
 var validation=require('./checkuser.js');
 const fileupload=require('./upload');
 //login form
@@ -97,7 +99,7 @@ app.post('/submit-adduser.js',function(req,res){
                
             });
         });
-        
+        res.render('adduser',{str:"User successfully added and email is sent to user."});
     }else{
         res.render('login',{});
     }
@@ -106,11 +108,16 @@ app.post('/submit-adduser.js',function(req,res){
  
  //delete user
  app.get('/deleteuser/:str',function(req,res){
-   db.deleteUser(req.params.str,function(){
-    db.getUsers(function(result){
-        res.render('datatable',{str:req.params.str+" deleted",arr:result});
-      });
-   });
+    if(req.session.isLoggedIn){
+        db.deleteUser(req.params.str,function(){
+            db.getUsers(function(result){
+                res.redirect('/userslist');
+              });
+           });
+    }else{
+        res.render('login',{});
+    }
+   
  });
  //adminhome
  app.get('/adminhome', function(req, res){
@@ -128,12 +135,14 @@ app.post('/submit-adduser.js',function(req,res){
  //admins userslist
  app.get('/userslist', function(req, res){
     if(req.session.isLoggedIn){
-        if(req.session.role=="admin"){
+        if(req.session.role=="admin")
+        {
             db.getUsers(function(result){
                 console.log(result);
                res.render('datatable',{str:"",arr:result});
               });
-        }else{
+        }else
+        {
             res.send("<h1>You are not admin</h1>")
         }
         
@@ -152,11 +161,16 @@ app.post('/submit-adduser.js',function(req,res){
   });
   
   app.post('/changepassword',function(req,res){
-       if(req.body.password1==req.body.password2){
-             db.updateUser(req.session.email,req.body.password1,function(){
-               res.render('changepassword',{role:req.session.role});
-             })
-       }
+    if(req.session.isLoggedIn){
+        if(req.body.password1==req.body.password2){
+            db.updateUser(req.session.email,req.body.password1,function(){
+              res.render('changepassword',{role:req.session.role});
+            })
+      }
+    }else{
+        res.render('login',{});
+    }
+       
   });
 
 //create community form
@@ -179,8 +193,7 @@ app.post('/upload', (req, res) => {
 app.get('/communitieslist',function(req,res){
     if(req.session.isLoggedIn){
         cdb.getCommunities(function(result){
-            console.log(result);
-            res.render('communitylist',{role:req.session.role,arr:result});
+            res.render('communitylist',{role:req.session.role,arr:result,curr_user:req.session.email});
       });
     }else{
         res.render('login',{});
@@ -200,7 +213,7 @@ app.get('/requesttoadd/:str', function(req, res){
                   }
                 }
                  db.updateUserArray(result.community_manager,obj,function(){
-
+                    res.send("Request is sent to the community manager");
                  });
              }else{
                 cdb.addUser(req.params.str,req.session.email,function(){
@@ -220,7 +233,7 @@ app.get('/requesttoadd/:str', function(req, res){
 app.get('/mycommunities', function(req, res){
     if(req.session.isLoggedIn){
         db.findUser({email:req.session.email},function(result){
-            console.log(result.active_communities);
+          //  console.log(result.active_communities);
             if(result.active_communities)
             res.render('mycommunities',{role:req.session.role,arr:result.active_communities});
             else
@@ -238,7 +251,6 @@ app.get('/mycommunities', function(req, res){
     }else{
         res.render('login',{});
     }
-     
     
   });
   app.get('/communityusers/:str',function(req,res){
@@ -266,19 +278,53 @@ app.get('/mycommunities', function(req, res){
   });
   app.get('/handlerequest/:username/:commname/:flag',function(req,res){
     if(req.session.isLoggedIn){
-       console.log("username"+req.params.commname);
+
        if(req.params.flag=="accept"){
         cdb.addUser(req.params.commname,req.params.username,function(){
-            console.log(req.params.commname+" "+req.params.username)
+           // console.log(req.params.commname+" "+req.params.username)
             db.addCommunity(req.params.username,req.params.commname,function(){
-                res.send("You are member of "+req.params.commname+" community now");
+                db.deleteRequest(req.session.email,req.params.commname,function(){
+                    res.redirect('/requests');
+                   });
             });
         });
+       }else{
+        db.deleteRequest(req.session.email,req.params.commname,function(){
+            res.redirect('/requests');
+           });
        }
-       
+      
+    }else{
+        res.render('login',{});
+      }
+    
+  });
+ let temp="";
+  app.get('/display_discussion',function(req,res){
+      console.log(temp);
+      ddb.getDiscussions(temp,function(result){
+        res.render('discussion',{role:"admin",arr:result,community_id:temp,username:req.session.email});
+      })
+  });
+
+  app.get('/discussion/:com_id',function(req,res){
+    if(req.session.isLoggedIn){
+        temp=req.params.com_id;
+        res.redirect('/display_discussion');
+    }else{
+        res.render('login',{});
+    }
+      
+  });
+  app.post('/add_discussion',function(req,res){
+    if(req.session.isLoggedIn){
+        var curr_date=new Date().toISOString().slice(0,10);
+        ddb.addDiscussion(req.body.community_id,req.body.title,req.body.message,curr_date,req.session.email,function(){
+            res.send({"good":"goodgirl"});
+        });
     }else{
         res.render('login',{});
     }
     
   });
-app.listen(3000);
+app.listen(3002);
